@@ -54,13 +54,13 @@ var locations = [
       flag: 'http://i.imgur.com/9P8aOMv.png?1'},
 
       {
-      continent: "South America",
-      city: "Guayaquil, Ecuador", 
-      cityTitle: "<h4>Guayaquil, Ecuador</h4>",    
+      continent: "North America",
+      city: "Cancun, Mexico", 
+      cityTitle: "<h4>Cancun, Mexico</h4>",    
       latLng: 
-                  {lat: -1.8312, lng: -78.1834},
-      infoImage:"<img class='contentImage' src='images/dubai.jpg'>", 
-      flag: 'http://i.imgur.com/FA0QC9h.png?1'}
+                  {lat: 21.1619, lng: -86.8515},
+      infoImage:"<img class='contentImage' src='images/cancun.jpg'>", 
+      flag: 'http://i.imgur.com/5ru5dDn.png?1'}
     ];  
 
 
@@ -203,7 +203,7 @@ function populateInfoWindow(marker, infowindow) {
       if (place.city.toLowerCase().indexOf(searchInput) !== -1) {
         
         self.visiblePlaces.push(place);
-        
+
       
         
 
