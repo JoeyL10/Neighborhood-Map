@@ -4,7 +4,7 @@
 
 // View
 
-var marker;
+var marker, infowindow;
 var locations = [
       
       {
@@ -65,6 +65,11 @@ var locations = [
 
 
 
+
+
+
+
+
 //Function to load map and start up app 
 
 function initMap() {
@@ -98,12 +103,16 @@ var ViewModel = function() {
  
 
 
+
+
   function Place(data) {
     this.city = data.city;
     this.latLng = data.latLng;
     this.flag = data.flag;
     this.infoImage = data.infoImage;
     this.cityTitle = data.cityTitle;
+    
+
     
     // You will save a reference to the Places' map marker after you build the
     // marker:
@@ -114,7 +123,6 @@ var ViewModel = function() {
 
 
 
-   
 
 
 // This pushes the locations to my list
@@ -139,34 +147,73 @@ var ViewModel = function() {
     };
 
     place.marker = new google.maps.Marker(marker);
-
+    
     // create an onClick event to open an infowindow at each marker
           place.marker.addListener('click', function() {
-          populateInfoWindow(this, largeInfowindow);
+          populateInfoWindow(this, infowindow);
+
         });
 
-          
-   
+         
+
+
   });
 
-var largeInfowindow = new google.maps.InfoWindow();
+infowindow = new google.maps.InfoWindow();
 
-function populateInfoWindow(marker, infowindow) {
-    if(infowindow.marker != marker) {
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + marker.content + '</div>');
-      infowindow.open(map, marker);
+
+
+ // API calls
+
+ //  Wiki AJAX request
+ 
+ 
+     
+
+
+
+
+
+ var populateInfoWindow = function(marker, infowindow) {
+
+  
+  var cities = locations.city;
+  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + cities + 
+  '&format=json';
+  $.ajax({
+    url: wikiUrl,
+    dataType: "jsonp",
+    success:  function(response) {
+        var articleList = response[1];
+          for (var i = 0; i < articleList.length; i++) {
+            articleStr = articleList[i];
+            var url = 'https://en.wikipedia.org/wiki/' + articleStr;
+            if(infowindow.marker != marker) {
+              infowindow.marker = marker;
+             infowindow.setContent('<div>' + marker.title + marker.content + '</div>' + '<li><a>' + url + '</a></li>');
+             infowindow.open(map, marker);
       // clear marker property if infowindow is closed
       infowindow.addListener('closeclick', function() {
       
       });
 
     }
+    }    
+
+          
+
+       
+  } 
+ });
+
+
+  
 
 
 
 
-}
+};
+
 
 
 
@@ -224,6 +271,14 @@ function populateInfoWindow(marker, infowindow) {
 
 
 
+   
+
+           
+
+
+
+
+
 //  Need to add animation later.  Google referenced below toggle function
  function toggleBounce(marker) {
       if (marker.getAnimation() !== null) {
@@ -236,34 +291,7 @@ function populateInfoWindow(marker, infowindow) {
 
 
 
-  // API calls
-
- //  Wiki AJAX request
-  function getWikiData() {
-  var test = "lake mary, florida"
-  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + test + 
-  '&format=json';
-
-  $.ajax({
-    url: wikiUrl,
-    dataType: "jsonp",
-    success:  function(response) {
-        var articleList = response[1];
-        if (articleList > 0) {
-          for (var i = 0; i < articleList.length; i++) {
-            articleStr = articleList[i];
-          var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-          var wikiContent = ('<li><a href="' + url + '"></a></li>');
-          };
-        } else {
-          console.log("Error getting Wiki articles");
-        }
-        
-    }
-  });
-  
- }
-
+ 
 
 
   
