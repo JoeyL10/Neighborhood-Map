@@ -113,6 +113,10 @@ var ViewModel = function() {
   }
 
 
+
+   
+
+
 // This pushes the locations to my list
 
   locations.forEach(function(place) {
@@ -140,6 +144,8 @@ var ViewModel = function() {
           place.marker.addListener('click', function() {
           populateInfoWindow(this, largeInfowindow);
         });
+
+          
    
   });
 
@@ -166,7 +172,7 @@ function populateInfoWindow(marker, infowindow) {
 
   
   
-  // This array will contain what its name implies: only the markers that should
+  // This array will contain only the markers that should
   // be visible based on user input. 
   self.visiblePlaces = ko.observableArray();
   
@@ -178,16 +184,11 @@ function populateInfoWindow(marker, infowindow) {
   });
   
   
-  // This, along with the data-bind on the <input> element, lets KO keep 
-  // constant awareness of what the user has entered. It stores the user's 
-  // input at all times.
+
   
   
   
-  // The filter will look at the names of the places the Markers are standing
-  // for, and look at the user input in the search box. If the user input string
-  // can be found in the place name, then the place is allowed to remain 
-  // visible. All other markers are removed.
+  
   self.filterMarkers = function() {
 
     
@@ -201,15 +202,12 @@ function populateInfoWindow(marker, infowindow) {
       place.marker.setVisible(false);
       
       if (place.city.toLowerCase().indexOf(searchInput) !== -1) {
-        
         self.visiblePlaces.push(place);
 
-      
-        
 
       }
-      
-    });
+
+          });
     
     
     self.visiblePlaces().forEach(function(place) {
@@ -221,20 +219,19 @@ function populateInfoWindow(marker, infowindow) {
 
 
 
-    function toggleBounce() {
-      if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-      } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    }
 
   }
 
 
 
 //  Need to add animation later.  Google referenced below toggle function
-
+ function toggleBounce(marker) {
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+    }
 
 
 
@@ -243,8 +240,8 @@ function populateInfoWindow(marker, infowindow) {
 
  //  Wiki AJAX request
   function getWikiData() {
-  var chile = "Santiago, Chile";
-  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + chile + 
+  var test = "lake mary, florida"
+  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + test + 
   '&format=json';
 
   $.ajax({
@@ -262,7 +259,6 @@ function populateInfoWindow(marker, infowindow) {
           console.log("Error getting Wiki articles");
         }
         
-         infowindow.setContent(wikiContent);
     }
   });
   
@@ -277,6 +273,7 @@ function populateInfoWindow(marker, infowindow) {
 
 
 
+// fix this for error handling later
 
 
 // function googleError() {
