@@ -121,8 +121,7 @@ var ViewModel = function() {
 
   }
 
-
-
+ 
 
 
 // This pushes the locations to my list
@@ -137,7 +136,8 @@ var ViewModel = function() {
   // Build Markers via the Maps API and place them on the map.
   self.allLocations.forEach(function(place) {
 
-    var marker = {
+     
+   var marker = {
       map: map,
       icon: place.flag,
       content: place.infoImage, 
@@ -146,39 +146,51 @@ var ViewModel = function() {
       animation: google.maps.Animation.DROP
     };
 
-    place.marker = new google.maps.Marker(marker);
+  place.marker = new google.maps.Marker(marker);
+
+   
     
     // create an onClick event to open an infowindow at each marker
           place.marker.addListener('click', function() {
-          populateInfoWindow(this, infowindow);
+          populateInfoWindow(place, infowindow);
+
 
         });
 
-         
+       
 
-
-  });
 
 infowindow = new google.maps.InfoWindow();
 
-
+place.marker.addListener('click', toggleBounce);
 
  // API calls
 
  //  Wiki AJAX request
  
+
+ // Google docs referenced below toggle function
+ function toggleBounce() {
+      if (place.marker.getAnimation() !== null) {
+        place.marker.setAnimation(null);
+      } else {
+        place.marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+          place.marker.setAnimation(null);
+        }, 2000);
+      }
+    }
+
  
-     
+});
 
+ var populateInfoWindow = function(place, infowindow) {
 
+ 
+  var marker = place.marker;
+  var city = place.city;
 
-
-
- var populateInfoWindow = function(marker, infowindow) {
-
-  
-  var cities = locations.city;
-  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + cities + 
+  var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + city  + 
   '&format=json';
   $.ajax({
     url: wikiUrl,
@@ -188,6 +200,7 @@ infowindow = new google.maps.InfoWindow();
           for (var i = 0; i < articleList.length; i++) {
             articleStr = articleList[i];
             var url = 'https://en.wikipedia.org/wiki/' + articleStr;
+
             if(infowindow.marker != marker) {
               infowindow.marker = marker;
              infowindow.setContent('<div>' + marker.title + marker.content + '</div>' + '<li><a>' + url + '</a></li>');
@@ -268,30 +281,6 @@ infowindow = new google.maps.InfoWindow();
 
 
   }
-
-
-
-   
-
-           
-
-
-
-
-
-//  Need to add animation later.  Google referenced below toggle function
- function toggleBounce(marker) {
-      if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-      } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    }
-
-
-
-
- 
 
 
   
