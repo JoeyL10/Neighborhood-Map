@@ -27,7 +27,7 @@
          <input id="searchBar"  type="search" placeholder="Location Search..." data-bind="textInput: userInput, event: {keyup: filterMarkers}">
   		<ul class="list-group" data-bind="foreach: visiblePlaces">
        <!--   <select class="continentList" data-bind="options: optionValues, value: selectedOptionValue"></select> -->
-		  <a href="#" class="list-group-item" data-bind="text: city"></a>
+		  <a href="#" class="list-group-item" data-bind="text: city, click: $parent.locationList"></a>
 	   </ul>
 	</div>
 </div>

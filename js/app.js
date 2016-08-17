@@ -9,58 +9,58 @@ var locations = [
       
       {
       
-      continent:  "North America",
       city: "Lake Mary, FL",
-      cityTitle: "<h4>Lake Mary, Florida</h4>",  
       latLng: 
                   {lat: 28.72589, lng: -81.3178}, 
       infoImage:"<img class='contentImage' src='images/roya.jpg'>"},
     
 
       {
-      continent: "South America",
+     
       city: "Santiago, Chile", 
-      cityTitle: "<h4>Santiago, Chile</h4>",  
       latLng: 
                   {lat: -33.4489, lng: -70.6693}, 
       infoImage:"<img class='contentImage' src='images/chile.jpg'>", 
       flag: 'http://i.imgur.com/5PPszEx.png?1'},
 
       {
-      continent: "South America",
-      city: "Medellin, Colombia",
-      cityTitle: "<h4>Medellin, Colombia</h4>",   
+     
+      city: "Medellin, Colombia",  
       latLng: 
                   {lat: 6.2442, lng: -75.5812}, 
       infoImage:"<img class='contentImage' src='images/colombia.jpg'>", 
       flag: 'http://i.imgur.com/v6tBbp6.gif?2'},
       
       {
-      continent: "Europe",    
-      city: "Venice, Italy",
-      cityTitle: "<h4>Venice, Italy</h4>",     
+        
+      city: "Venice, Italy",  
       latLng: 
                   {lat: 45.4408, lng: 12.3155},
       infoImage:"<img class='contentImage' src='images/venice.jpg'>", 
       flag: 'http://i.imgur.com/VO4k3Ks.gif?1'},
 
       {
-      continent: "Asia",
-      city: "Dubai, UAE",
-      cityTitle: "<h4>Dubai, UAE</h4>",     
+     
+      city: "Dubai, UAE",   
       latLng: 
                   {lat: 25.2048, lng: 55.2708},
       infoImage:"<img class='contentImage' src='images/dubai.jpg'>", 
       flag: 'http://i.imgur.com/9P8aOMv.png?1'},
 
       {
-      continent: "North America",
+     
       city: "Cancun, Mexico", 
-      cityTitle: "<h4>Cancun, Mexico</h4>",    
       latLng: 
                   {lat: 21.1619, lng: -86.8515},
       infoImage:"<img class='contentImage' src='images/cancun.jpg'>", 
-      flag: 'http://i.imgur.com/5ru5dDn.png?1'}
+      flag: 'http://i.imgur.com/5ru5dDn.png?1'},
+
+      {
+      city: "Corfu, Greece", 
+      latLng: 
+                  {lat: 39.6243, lng: 19.9217},
+      infoImage:"<img class='contentImage' src='images/greece.jpg'>", 
+      flag: 'http://i.imgur.com/6Hri67g.png?1'}
     ];  
 
 
@@ -76,12 +76,12 @@ function initMap() {
   // constructor creates a new map 
   var mapProp =  {
           center: {lat: 28.52321, lng: -81.02323},
-          zoom: 6
+          zoom: 2
           
         };
   map = new google.maps.Map(document.getElementById('map'), mapProp);
-
-
+  
+  
 
   ko.applyBindings(new ViewModel());
 };
@@ -100,7 +100,6 @@ var ViewModel = function() {
   self.allLocations = [];
 
 
- 
 
 
 
@@ -110,7 +109,7 @@ var ViewModel = function() {
     this.latLng = data.latLng;
     this.flag = data.flag;
     this.infoImage = data.infoImage;
-    this.cityTitle = data.cityTitle;
+    
     
 
     
@@ -142,7 +141,7 @@ var ViewModel = function() {
       icon: place.flag,
       content: place.infoImage, 
       position: place.latLng,
-      title: place.cityTitle,
+      title: place.city,
       animation: google.maps.Animation.DROP
     };
 
@@ -164,7 +163,20 @@ infowindow = new google.maps.InfoWindow();
 
 place.marker.addListener('click', toggleBounce);
 
- // API calls
+ 
+
+
+
+
+self.locationList = function(place) {
+  var marker = place.marker;
+  var city = place.marker;
+ 
+  google.maps.event.trigger(marker, 'click');
+ 
+  
+ 
+};
 
  //  Wiki AJAX request
  
@@ -203,7 +215,7 @@ place.marker.addListener('click', toggleBounce);
 
             if(infowindow.marker != marker) {
               infowindow.marker = marker;
-             infowindow.setContent('<div>' + marker.title + marker.content + '</div>' + '<li><a>' + url + '</a></li>');
+             infowindow.setContent('<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>' + '<li><a>' + url + '</a></li>');
              infowindow.open(map, marker);
       // clear marker property if infowindow is closed
       infowindow.addListener('closeclick', function() {
@@ -230,12 +242,17 @@ place.marker.addListener('click', toggleBounce);
 
 
 
+
+
   
   
   // This array will contain only the markers that should
   // be visible based on user input. 
   self.visiblePlaces = ko.observableArray();
   
+
+
+
   
   // All places should be visible at first. We only want to remove them if the
   // user enters some input which would filter some of them out.
@@ -281,6 +298,10 @@ place.marker.addListener('click', toggleBounce);
 
 
   }
+
+
+
+
 
 
   
