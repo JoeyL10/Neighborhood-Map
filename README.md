@@ -12,7 +12,7 @@ Wikipedia article about the city.
 
 The purpose of this project was to use Knockout and Google Maps APIs to create a map that displays information
 about various locations using a 3rd party API.  The API I chose to use was Wikipedia so I can pull in information
-about cities my wife and I have visited recently.  This is one of the final projects for Udacity's Front End Nanodegree.  
+about each city.  This is one of the final projects for Udacity's Front End Nanodegree.  
 Completion of this project relies on both skills already learned from previous projects and new ones introduced that are specific
 to this one, such as Knockout and use of APIs.
 
