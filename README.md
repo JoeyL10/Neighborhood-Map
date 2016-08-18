@@ -4,12 +4,18 @@
 
 # Neighborhood Map Project
 
-write something here
-
+My map shows markers along with a list of places that my wife and I have visited recently.  Click on items from
+either the list or on the markers in order to see a picture from my trip to the location selected along with a
+Wikipedia article about the city.
 
 ## Main Objective
 
-write something here
+The purpose of this project was to use Knockout and Google Maps APIs to create a map that displays information
+about various locations using a 3rd party API.  The API I chose to use was Wikipedia so I can pull in information
+about cities my wife and I have visited recently.  This is one of the final projects for Udacity's Front End Nanodegree.  
+Completion of this project relies on both skills already learned from previous projects and new ones introduced that are specific
+to this one, such as Knockout and use of APIs.
+
 
 To view the app live click **<a href="https://joeyl10.github.io/Neighborhood-Map/">Here</a>**
 
