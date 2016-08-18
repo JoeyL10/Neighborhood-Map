@@ -52,7 +52,7 @@ var locations = [
       city: "Cancun, Mexico", 
       latLng: 
                   {lat: 21.1619, lng: -86.8515},
-      infoImage:"<img class='contentImage' src='images/cancun.jpg'>", 
+      infoImage:"<img class='contentImage' src='srcimages/cancun.jpg'>", 
       flag: 'http://i.imgur.com/5ru5dDn.png?1'},
 
       {

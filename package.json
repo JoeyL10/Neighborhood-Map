@@ -1,0 +1,34 @@
+{
+  "name": "neighborhood-map",
+  "version": "1.0.0",
+  "description": "Udacity neighborhood map project using google maps and knockout",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeyL10/Neighborhood-Map.git"
+  },
+  "keywords": [
+    "udacity",
+    "google",
+    "maps",
+    "api",
+    "wiki",
+    "api",
+    "knockout",
+    "fend"
+  ],
+  "author": "Joey Laird",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoeyL10/Neighborhood-Map/issues"
+  },
+  "homepage": "https://github.com/JoeyL10/Neighborhood-Map#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1"
+  }
+}
