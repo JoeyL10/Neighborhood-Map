@@ -4,7 +4,7 @@
 
 // View
 
-var marker, infowindow;
+var infowindow;
 var locations = [
       
       {
@@ -73,6 +73,8 @@ var locations = [
 //Function to load map and start up app 
 
 function initMap() {
+
+  
   // constructor creates a new map 
   var mapProp =  {
           center: {lat: 28.52321, lng: -81.02323},
@@ -80,12 +82,20 @@ function initMap() {
           
         };
   map = new google.maps.Map(document.getElementById('map'), mapProp);
+ 
   
-  
-
   ko.applyBindings(new ViewModel());
-};
+}
 
+
+ function googleError() {
+    if (typeof google === "undefined" || google === null) {
+        $("#map").html('<h1>' + "Fail to load Google maps.  Please refresh and try again later" + '</h1>');
+    } 
+}
+
+
+    
 
 
 // ViewModel
@@ -170,14 +180,11 @@ place.marker.addListener('click', toggleBounce);
  
 
 
-
 //  Create list function with click listener and bind to list items in index.html
 
 
 self.locationList = function(place) {
   var marker = place.marker;
-  var city = place.marker;
- 
   google.maps.event.trigger(marker, 'click');
  
   
@@ -227,39 +234,47 @@ map.fitBounds (bounds);
 
   var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + city  + 
   '&format=json';
+
+ 
   $.ajax({
     url: wikiUrl,
     dataType: "jsonp",
     success:  function(response) {
         var articleList = response[1];
+          if (articleList.length > 0) {
           for (var i = 0; i < articleList.length; i++) {
             articleStr = articleList[i];
             var url = "https://en.wikipedia.org/wiki/" + articleStr;
 
+
             if(infowindow.marker != marker) {
               infowindow.marker = marker;
              var contentString = '<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>' + '<a href=" ' + url +'">' + articleStr + '</a>';
-             var wikiAtrib = '<div>' + '<p>' + "Information about " + city + " is provided by Wikipedia" + '</p>' +'</div>';
+             var wikiAtrib = '<div>' + '<p>' + "Information about " + city + '<br>' + " is provided by Wikipedia." + '</p>' +'</div>';
              infowindow.setContent(contentString + wikiAtrib);
              infowindow.open(map, marker);
-      // clear marker property if infowindow is closed
-      infowindow.addListener('closeclick', function() {
-      
-      });
 
-    }
-    }    
+              // clear marker property if infowindow is closed
+              infowindow.addListener('closeclick', function() {
+              
+              });
 
-          
+    } 
 
-       
-  } 
- });
+   }
+} else {
+  // Error handling if no wiki articles are found
+  var wikiError = '<div>' + '<p>' + "Failed to load Wiki article about location." + '<br>' + "Please refresh and try again later." + '</p>' +'</div>';
+  var imageNoUrl = '<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>';
+  infowindow.setContent(imageNoUrl + wikiError);
+  infowindow.open(map, marker);
 
-
+}
+   
+ }
+ 
   
-
-
+ });
 
 
 };
@@ -322,7 +337,7 @@ map.fitBounds (bounds);
 
 
 
-  }
+  };
 
 
 
@@ -336,14 +351,6 @@ map.fitBounds (bounds);
 
 
 
-// fix this for error handling later
 
-
-// function googleError() {
-//     if (typeof $ === "object") {
-//         $("#map").html("Fail to load Google maps");
-//     } else {
-//         document.getElementById("map").innerHTML = '<h2>Fail to load Google maps...</h2>';
-//     };
 
 
