@@ -161,11 +161,17 @@ var ViewModel = function() {
 
 infowindow = new google.maps.InfoWindow();
 
+
+
+// invoke toggleBounce to animate markers
+
 place.marker.addListener('click', toggleBounce);
 
  
 
 
+
+//  Create list function with click listener and bind to list items in index.html
 
 
 self.locationList = function(place) {
@@ -178,7 +184,7 @@ self.locationList = function(place) {
  
 };
 
- //  Wiki AJAX request
+
  
 
  // Google docs referenced below toggle function
@@ -202,6 +208,9 @@ self.locationList = function(place) {
   var marker = place.marker;
   var city = place.city;
 
+
+   //  Wiki AJAX request
+
   var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + city  + 
   '&format=json';
   $.ajax({
@@ -211,11 +220,13 @@ self.locationList = function(place) {
         var articleList = response[1];
           for (var i = 0; i < articleList.length; i++) {
             articleStr = articleList[i];
-            var url = 'https://en.wikipedia.org/wiki/' + articleStr;
+            var url = "https://en.wikipedia.org/wiki/" + articleStr;
 
             if(infowindow.marker != marker) {
               infowindow.marker = marker;
-             infowindow.setContent('<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>' + '<li><a>' + url + '</a></li>');
+             var contentString = '<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>' + '<a href=" ' + url +'">' + articleStr + '</a>';
+             var wikiAtrib = '<div>' + '<p>' + "Information about " + city + " is provided by Wikipedia" + '</p>' +'</div>';
+             infowindow.setContent(contentString + wikiAtrib);
              infowindow.open(map, marker);
       // clear marker property if infowindow is closed
       infowindow.addListener('closeclick', function() {
