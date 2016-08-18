@@ -76,7 +76,7 @@ function initMap() {
   // constructor creates a new map 
   var mapProp =  {
           center: {lat: 28.52321, lng: -81.02323},
-          zoom: 2
+          zoom: 5
           
         };
   map = new google.maps.Map(document.getElementById('map'), mapProp);
@@ -185,6 +185,20 @@ self.locationList = function(place) {
 };
 
 
+
+// Create array with most southern and northern markers as boundaries in order to fit all maps on screen
+
+var LatLngList = new Array (new google.maps.LatLng (-33.4489, -70.6693), new google.maps.LatLng (45.4408,12.3155));
+
+var bounds = new google.maps.LatLngBounds ();
+
+for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
+
+  bounds.extend (LatLngList[i]);
+}
+
+//  Fit these bounds to the map
+map.fitBounds (bounds);
  
 
  // Google docs referenced below toggle function
