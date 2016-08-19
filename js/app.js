@@ -7,83 +7,81 @@ var locations = [
 
     {
 
-        city: "Lake Mary, FL",
+        city: 'Lake Mary, FL',
         latLng: {
             lat: 28.72589,
             lng: -81.3178
         },
-        infoImage: "<img class='contentImage' src='images/roya.jpg'>"
+        infoImage: "<img class='content-image' src='images/roya.jpg'>"
     },
 
 
     {
 
-        city: "Santiago, Chile",
+        city: 'Santiago, Chile',
         latLng: {
             lat: -33.4489,
             lng: -70.6693
         },
-        infoImage: "<img class='contentImage' src='images/chile.jpg'>",
+        infoImage: "<img class='content-image' src='images/chile.jpg'>",
         flag: 'http://i.imgur.com/5PPszEx.png?1'
     },
 
     {
 
-        city: "Medellin, Colombia",
+        city: 'Medellin, Colombia',
         latLng: {
             lat: 6.2442,
             lng: -75.5812
         },
-        infoImage: "<img class='contentImage' src='images/colombia.jpg'>",
+        infoImage: "<img class='content-image' src='images/colombia.jpg'>",
         flag: 'http://i.imgur.com/v6tBbp6.gif?2'
     },
 
     {
 
-        city: "Venice, Italy",
+        city: 'Venice, Italy',
         latLng: {
             lat: 45.4408,
             lng: 12.3155
         },
-        infoImage: "<img class='contentImage' src='images/venice.jpg'>",
+        infoImage: "<img class='content-image' src='images/venice.jpg'>",
         flag: 'http://i.imgur.com/VO4k3Ks.gif?1'
     },
 
     {
 
-        city: "Dubai, UAE",
+        city: 'Dubai, UAE',
         latLng: {
             lat: 25.2048,
             lng: 55.2708
         },
-        infoImage: "<img class='contentImage' src='images/dubai.jpg'>",
+        infoImage: "<img class='content-image' src='images/dubai.jpg'>",
         flag: 'http://i.imgur.com/9P8aOMv.png?1'
     },
 
     {
 
-        city: "Cancun, Mexico",
+        city: 'Cancun, Mexico',
         latLng: {
             lat: 21.1619,
             lng: -86.8515
         },
-        infoImage: "<img class='contentImage' src='srcimages/cancun.jpg'>",
+        infoImage: "<img class='content-image' src='srcimages/cancun.jpg'>",
         flag: 'http://i.imgur.com/5ru5dDn.png?1'
     },
 
     {
-        city: "Corfu, Greece",
+        city: 'Corfu, Greece',
         latLng: {
             lat: 39.6243,
             lng: 19.9217
         },
-        infoImage: "<img class='contentImage' src='images/greece.jpg'>",
+        infoImage: "<img class='content-image' src='images/greece.jpg'>",
         flag: 'http://i.imgur.com/6Hri67g.png?1'
     }
+
 ];
-
-
-
 
 //Function to load map and start up app 
 
@@ -107,17 +105,12 @@ function initMap() {
 
 
 function googleError() {
-    if (typeof google === "undefined" || google === null) {
-        $("#map").html('<h1>' + "Fail to load Google maps.  Please refresh and try again later" + '</h1>');
+    if (typeof google === "undefined") {
+        $('#map').html('<h1>' + "Fail to load Google maps.  Please refresh and try again later." + '</h1>');
     }
 }
 
-
-
-
 // ViewModel
-
-
 
 var ViewModel = function() {
 
@@ -126,16 +119,11 @@ var ViewModel = function() {
     self.bounds = new google.maps.LatLngBounds();
     self.allLocations = [];
 
-
-
-
     function Place(data) {
         this.city = data.city;
         this.latLng = data.latLng;
         this.flag = data.flag;
         this.infoImage = data.infoImage;
-
-
 
 
         // You will save a reference to the Places' map marker after you build the
@@ -146,15 +134,12 @@ var ViewModel = function() {
     }
 
 
-
-
     // This pushes the locations to my list
 
     locations.forEach(function(place) {
         self.allLocations.push(new Place(place));
 
     });
-
 
 
     // Build Markers via the Maps API and place them on the map.
@@ -173,7 +158,6 @@ var ViewModel = function() {
         place.marker = new google.maps.Marker(marker);
 
 
-
         // create an onClick event to open an infowindow at each marker
         place.marker.addListener('click', function() {
             populateInfoWindow(place, infowindow);
@@ -183,16 +167,12 @@ var ViewModel = function() {
 
 
 
-
         infowindow = new google.maps.InfoWindow();
-
 
 
         // invoke toggleBounce to animate markers
 
         place.marker.addListener('click', toggleBounce);
-
-
 
 
         //  Create list function with click listener and bind to list items in index.html
@@ -202,10 +182,7 @@ var ViewModel = function() {
             var marker = place.marker;
             google.maps.event.trigger(marker, 'click');
 
-
-
         };
-
 
 
         // Create array with most southern and northern markers as boundaries in order to fit all maps on screen
@@ -231,7 +208,7 @@ var ViewModel = function() {
                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
                 setTimeout(function() {
                     place.marker.setAnimation(null);
-                }, 2000);
+                }, 2100);
             }
         }
 
@@ -253,9 +230,9 @@ var ViewModel = function() {
 
         $.ajax({
             url: wikiUrl,
-            dataType: "jsonp",
-            success: function(response) {
-                var articleList = response[1];
+            dataType: "jsonp"
+            }).done(function(data) {
+                var articleList = data[1];
                 if (articleList.length > 0) {
                     for (var i = 0; i < articleList.length; i++) {
                         articleStr = articleList[i];
@@ -273,23 +250,28 @@ var ViewModel = function() {
                             infowindow.addListener('closeclick', function() {
 
                             });
-
+                            console.log(url);
                         }
 
                     }
                 } else {
                     // Error handling if no wiki articles are found
-                    var wikiError = '<div>' + '<p>' + "Failed to load Wiki article about location." + '<br>' + "Please refresh and try again later." + '</p>' + '</div>';
+                    var noArticle = '<div>' + '<h6>' + "Sorry, we could not find a Wikipedia article on this location." + '</h6>' + '</div>';
                     var imageNoUrl = '<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>';
-                    infowindow.setContent(imageNoUrl + wikiError);
+                    infowindow.setContent(imageNoUrl + noArticle);
                     infowindow.open(map, marker);
 
                 }
 
-            }
+            }).fail(function(){
+                var wikiFail = '<div>' + '<h6>' + "Sorry, we tried to retrieve an article about this " + '<br>' + "location but Wikipedia cannot be reached at the" + '<br>' + "moment. Please refresh and try again later." + '</h6>' + '</div>';
+                var imageNoUrl = '<div>' + '<h4>' + marker.title + '</h4>' + marker.content + '</div>';
+                infowindow.setContent(imageNoUrl + wikiFail);
+                infowindow.open(map, marker);
+            });
 
 
-        });
+        
 
 
     };
@@ -311,6 +293,8 @@ var ViewModel = function() {
     });
 
 
+
+// credit codepen by mcs for filter markers function http://codepen.io/prather-mcs/pen/KpjbNN
 
 
     self.filterMarkers = function() {

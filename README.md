@@ -16,8 +16,27 @@ about each city.  This is one of the final projects for Udacity's Front End Nano
 Completion of this project relies on both skills already learned from previous projects and new ones introduced that are specific
 to this one, such as Knockout and use of APIs.
 
+## Installation
 
 To view the app live click **<a href="https://joeyl10.github.io/Neighborhood-Map/">Here</a>**
+Alternatively, you can download the repo and launch index.html.  Click on items from either the list or on the markers in order to see a picture from my trip to the location selected along with a Wikipedia article about the city.  If you add new images install grunt and run the
+grunt task to optimize them. The level of optimization can be changed in gruntfile.js. To install Grunt go **<a href="http://gruntjs.com/installing-grunt">Here</a>**
+
+
+## Sites and Tools Used
+
+Sites
+
+* Udacity Forum
+* https://developers.google.com/maps/
+* http://knockoutjs.com/
+* http://codepen.io/prather-mcs/pen/KpjbNN
+* http://api.jquery.com/jquery.ajax/
+
+APIs
+
+Google Maps
+Wikipedia
 
 
 
