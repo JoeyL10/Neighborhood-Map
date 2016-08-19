@@ -19,7 +19,7 @@ to this one, such as Knockout and use of APIs.
 ## Installation
 
 To view the app live click **<a href="https://joeyl10.github.io/Neighborhood-Map/">Here</a>**
-.Alternatively, you can download the repo and launch index.html.  Click on items from either the list or on the markers in order to see a picture from my trip to the location selected along with a Wikipedia article about the city.  If you add new images install grunt and run the
+.  Alternatively, you can download the repo and launch index.html.  Click on items from either the list or on the markers in order to see a picture from my trip to the location selected along with a Wikipedia article about the city.  If you add new images install grunt and run the
 grunt task to optimize them. The level of optimization can be changed in gruntfile.js. To install Grunt go **<a href="http://gruntjs.com/installing-grunt">Here</a>**
 
 
