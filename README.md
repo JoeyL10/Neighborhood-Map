@@ -33,9 +33,9 @@ Sites
 * http://codepen.io/prather-mcs/pen/KpjbNN
 * http://api.jquery.com/jquery.ajax/
 
-APIs
+APIs Used
 
-Google Maps
+Google Maps and
 Wikipedia
 
 
